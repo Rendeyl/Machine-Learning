@@ -1,0 +1,13 @@
+ID,Age,Salary,Gender,City,Experience,Target
+1,25.0,50000.0,M,NY,Junior,1
+2,,60000.0,F,San Francisco,Senior,0
+3,37.0,,male,LA,,1
+4,45.0,120000.0,Female,New York,Mid,0
+5,22.0,40000.0,f,LA,Junior,1
+6,35.0,80000.0,Male,SF,Senior,1
+7,29.0,52000.0,M,Los Angeles,Mid,0
+8,,58000.0,Female,SanFran,Junior,1
+9,41.0,,F,New York,Senior,0
+10,33.0,72000.0,male,LA,Mid,0
+11,28.0,60000.0,m,SF,Junior,1
+12,50.0,,,,Senior,0
