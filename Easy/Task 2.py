@@ -17,29 +17,35 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
 
 a = pd.read_csv("employees.csv")
+
+# Shows the Before Dataset
 print(a)
 
+# Imputer model for handling the missing data, median for numeric data
 model = SimpleImputer(strategy="median")
 a[["Age"]] = model.fit_transform(a[["Age"]])
 
+# Second Imputer for handling missing data, most_frequent for categorical data
 model2 = SimpleImputer(strategy="most_frequent")
 a[["Gender"]] = model2.fit_transform(a[["Gender"]])
-
 a[["Salary"]] = model2.fit_transform(a[["Salary"]])
 
+# Cleaning by removing extra spaces and making lowercase
 a["Gender"] = a["Gender"].str.strip()
 a["Gender"] = a["Gender"].str.lower()
 
+# Changing values using .replace()
 a["Gender"] = a["Gender"].replace({"female": "F",
                                    "f": "F",
                                     "male": "M",
                                     "m": "M"})
 
+# Cleaning by removing extra spaces and making lowercase
 a["City"] = a["City"].str.lower()
 a["City"] = a["City"].str.replace(" ", "", regex=False)
-
 a[["City"]] = model2.fit_transform(a[["City"]])
 
+# Changing values using .replace()
 a["City"] = a["City"].replace({
     "newyork": "NY",
     "ny": "NY",
@@ -50,31 +56,38 @@ a["City"] = a["City"].replace({
     "sanfran": "SF"
 })
 
+# Cleaning by removing extra spaces and making lowercase
 a["Experience"] = a["Experience"].str.lower()
 a["Experience"] = a["Experience"].str.replace(" ", "", regex=False)
 
+# Replaced "mid" to "Intermediate" for better formating
 a["Experience"] = a["Experience"].replace({"mid": "Intermediate"})
 
+# Using the 2nd Imputer for the "experience"
 a[["Experience"]] = model2.fit_transform(a[["Experience"]])
-
 a["Experience"] = a["Experience"].str.title()
 
+# LabelEncoder for encoding (Not used)
 encoder = LabelEncoder()
 
+# Using map for encoding categorical data
 experience_map = {
     "Junior": 0,
     "Intermediate": 1,
     "Senior": 2
 }
-
 a["Experience"] = a["Experience"].map(experience_map)
 
+# This creates new binary (0/1) columns for each category
 a = pd.get_dummies(a, columns=["Gender", "City"], dtype=int)
 
+# StandardScaler standardizes values so they have mean=0 and std=1
 scaler = StandardScaler()
 a[["Age_scaled", "Salary_scaled"]] = scaler.fit_transform(a[["Age", "Salary"]])
 
+# Display settings to show all rows and columns in the output
 pd.set_option("display.max_rows", None)
 pd.set_option("display.max_columns", None)
 
+# Prints the After Dataset
 print(a)
